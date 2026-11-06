@@ -75,6 +75,6 @@ export function render(container) {
     if (attempts <= 0) finish(false);
   };
   $('guess-start').onclick = start;
-  $('guess-save').onclick = () => { if (saved || !finished) return; const name = askName(); if (!name) return; saveGameScore(game, name, score); saved = true; $('guess-save').textContent = '✓ Resultado guardado'; $('guess-save').disabled = true; result.innerHTML += message('💾 Resultado guardado en el ranking local.', 'success'); };
+  $('guess-save').onclick = () => { if (saved || !finished) return; const name = askName(); if (!name) return; saveGameScore(game, name, score); saved = true; $('guess-save').textContent = '✓ Resultado guardado'; $('guess-save').disabled = true; result.innerHTML += message('💾 Resultado agregado al ranking.', 'success'); };
   start();
 }

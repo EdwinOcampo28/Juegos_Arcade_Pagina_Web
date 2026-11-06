@@ -16,7 +16,7 @@ export function render(root, saveScore) {
  function cardMarkup(){return COLORS.map((c,i)=>`<button class="sequence-pad pad-${c.id}" data-pad="${i}" aria-label="${c.name}" ${locked?'disabled':''}><span>${c.symbol}</span><small>${c.name}</small></button>`).join('');}
  function draw(){
   root.innerHTML=`<section class="game-panel sequence-panel">
-   <div class="sequence-heading"><div><span class="badge">MEMORIA · REFLEJOS</span><h2>💡 Secuencia Neon</h2><p>Observa las luces, memoriza el orden y repítelo sin equivocarte.</p></div><div class="sequence-stats"><div><small>Ronda</small><strong>${level}</strong></div><div><small>Récord local</small><strong>${best}</strong></div></div></div>
+   <div class="sequence-heading"><div><span class="badge">MEMORIA · REFLEJOS</span><h2>💡 Secuencia Neon</h2><p>Observa las luces, memoriza el orden y repítelo sin equivocarte.</p></div><div class="sequence-stats"><div><small>Ronda</small><strong>${level}</strong></div><div><small>Récord</small><strong>${best}</strong></div></div></div>
    <div class="sequence-status" id="sequence-status" aria-live="polite">${level===0?'Pulsa «Comenzar» para jugar.':gameOver?'Fin de la partida.':'Tu turno: repite la secuencia.'}</div>
    <div class="sequence-board">${cardMarkup()}</div>
    <div class="sequence-actions">${level===0||gameOver?`<button class="btn btn-primary" id="sequence-start">${gameOver?'↻ Jugar de nuevo':'▶ Comenzar'}</button>`:`<button class="btn secondary" id="sequence-repeat" ${playingBack?'disabled':''}>↻ Repetir secuencia</button>`}<button class="btn secondary" id="sequence-sound">${audio?'♫ Sonido activo':'♫ Sonido activado al jugar'}</button></div>

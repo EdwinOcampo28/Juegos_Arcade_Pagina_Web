@@ -1,4 +1,3 @@
-// Persistencia local multiusuario: no utiliza MySQL, backend ni servicios externos.
 const USERS_KEY = 'neon_arcade_users_v4';
 const ACTIVE_KEY = 'neon_arcade_active_user_v4';
 const SCORES_KEY = 'neon_arcade_scores_v4';
@@ -25,7 +24,7 @@ const activeId = () => localStorage.getItem(ACTIVE_KEY);
 function currentRaw() { return users().find(u => u.id === activeId()) || null; }
 function requireUser() { const u=currentRaw(); if(!u) throw new Error('Inicia sesión para continuar.'); return u; }
 async function hashPassword(password) {
-  if (!globalThis.crypto?.subtle) throw new Error('El navegador no permite proteger la contraseña. Ejecuta INICIAR_LOCAL_WINDOWS.bat y abre localhost.');
+  if (!globalThis.crypto?.subtle) throw new Error('No se pudo proteger la contraseña. Prueba de nuevo.');
   const bytes = new TextEncoder().encode(password);
   const digest = await crypto.subtle.digest('SHA-256', bytes);
   return [...new Uint8Array(digest)].map(b=>b.toString(16).padStart(2,'0')).join('');
@@ -84,6 +83,6 @@ function resetUser(id){return adminAction(()=>{if(id===activeId())throw new Erro
 function adminDelete(id){return adminAction(()=>{if(id===activeId())throw new Error('No puedes eliminar tu propia cuenta activa.');const list=users(),u=list.find(x=>x.id===id);if(!u)throw new Error('Usuario no encontrado.');if(u.role==='admin'&&list.filter(x=>x.role==='admin').length===1)throw new Error('Debe quedar al menos un administrador.');setUsers(list.filter(x=>x.id!==id));write(SCORES_KEY,scores().filter(x=>x.userId!==id));logEvent('Cuenta eliminada',u.username);return true;});}
 function activityLog(){return adminAction(()=>read(LOG_KEY,[]).slice(0,40));}
 function analytics(){const u=requireUser(),all=scores(),mine=all.filter(x=>x.userId===u.id),byGame={};mine.forEach(x=>{byGame[x.game]=(byGame[x.game]||0)+1;});return {total:mine.length,best:mine.reduce((m,x)=>Math.max(m,x.score),0),byGame:Object.entries(byGame).sort((a,b)=>b[1]-a[1]).slice(0,6),recent:mine.slice(-7)};}
-export const api={login,register,logout,profile,score:async x=>saveScore(x),rankings:async()=>rankings(),users:async()=>adminUsers(),stats:async()=>adminStats(),editProfile,toggleFavorite,dailyMissions,achievements,userHistory,changeRole,resetUser,deleteUser:adminDelete,activityLog,analytics,health:async()=>({ok:true,storage:'localStorage',database:false})};
+export const api={login,register,logout,profile,score:async x=>saveScore(x),rankings:async()=>rankings(),users:async()=>adminUsers(),stats:async()=>adminStats(),editProfile,toggleFavorite,dailyMissions,achievements,userHistory,changeRole,resetUser,deleteUser:adminDelete,activityLog,analytics,health:async()=>({ok:true})};
 export const session={save:()=>{},clear:logout,active:()=>!!currentRaw()};
 export function resetLocalData(){[USERS_KEY,SCORES_KEY,ACTIVE_KEY,'neon_arcade_local_player_v3','neon_arcade_scores_v3',LOG_KEY,'neon_arcade_daily_v1'].forEach(k=>localStorage.removeItem(k));}

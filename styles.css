@@ -126,7 +126,7 @@ footer { margin-top:auto; border-top:1px solid var(--border); padding:18px 0 24p
 }
 
 
-/* Autenticación local */
+/* Autenticación */
 #auth.view.active { display:flex; align-items:center; min-height:calc(100vh - 190px); }
 .auth-layout { display:grid; grid-template-columns:1.1fr minmax(300px,.9fr); gap:24px; width:100%; align-items:stretch; }
 .auth-hero { margin:0; min-height:100%; display:flex; flex-direction:column; justify-content:center; }
@@ -320,8 +320,8 @@ footer { margin-top:auto; border-top:1px solid var(--border); padding:18px 0 24p
 .dashboard-info-card h3 { margin:0 0 7px; font-size:1rem; }
 .dashboard-info-card p { margin:0; color:var(--muted); font-size:.85rem; line-height:1.6; }
 .dashboard-info-card p strong { color:var(--green); }
-.local-status { display:inline-flex; align-items:center; gap:8px; color:var(--muted); font-size:.75rem; padding:8px 10px; border-radius:999px; border:1px solid rgba(0,255,136,.15); }
-.local-status i { width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 10px var(--green); }
+.progress-status { display:inline-flex; align-items:center; gap:8px; color:var(--muted); font-size:.75rem; padding:8px 10px; border-radius:999px; border:1px solid rgba(0,255,136,.15); }
+.progress-status i { width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 10px var(--green); }
 .admin-hero { display:flex; align-items:center; justify-content:space-between; gap:20px; background:radial-gradient(ellipse at 85% 20%,rgba(189,131,255,.14),transparent 36%),radial-gradient(ellipse at 0% 100%,rgba(0,229,255,.09),transparent 42%),linear-gradient(145deg,rgba(16,30,49,.98),rgba(7,15,27,.99)); }
 .admin-hero-copy { min-width:0; }
 .admin-hero h2 span { color:var(--cyan); }
@@ -570,9 +570,7 @@ footer { margin-top:auto; border-top:1px solid var(--border); padding:18px 0 24p
   padding: 24px;
 }
 #home #games > .mission-strip { margin-top: 22px; }
-@media (min-width: 1500px) {
-  #home #games > #game-cards.game-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-}
+
 @media (max-width: 900px) {
   #home #games > #game-cards.game-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
 }
